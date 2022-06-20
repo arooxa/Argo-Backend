@@ -1,0 +1,42 @@
+Items should have the following fields accessible:
+- Title, Status, Priority, etc.
+- with foreign key identifying what group they are a part of
+
+Groups should have the following fields accessible:
+- Title
+- Foreign key identifying what group number it is which will determine order on page and what items are in it
+
+
+
+User:
+PK - User ID - String
+Field - First Name - String
+Field - Last Name - String
+Field - Email - String
+
+Boards:
+PK - BoardID - String
+FK - UserID - String
+Field - Board Name - String
+
+BoardUsers:
+PK - autogen ID
+FK - Board ID
+FK - User ID
+Field - Role Name
+
+Groups:
+PK - GroupID - String
+FK - BoardID - String
+Field - Group Name - String
+Field - Group order - Integer
+
+Items:
+PK - ItemID - String
+FK - GroupID - String
+Field - Card Description - String
+Field - for each column
+
+
+
+
