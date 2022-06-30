@@ -16,7 +16,7 @@ public class Board {
     private String board_desc;
 
     @ManyToOne
-    @JoinColumn(name = "user_fk", referencedColumnName = "user_id")
+    @JoinColumn(name = "user_fk", referencedColumnName = "id")
     private User user;
 
     @OneToMany(mappedBy="board")

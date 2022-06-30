@@ -1,18 +1,24 @@
 package com.example.Argo.models;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Data
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private long user_id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
     private String first_name;
     private String last_name;
-    private String email;
+    private String userName;
+    @Column(length = 60)
+    private String password;
+    private String roles;
+    private boolean active = true;
 
     @OneToMany(mappedBy="user")
     private List<Board> boards;
@@ -21,19 +27,19 @@ public class User {
 
     }
 
-    public User(long user_id, String first_name, String last_name, String email) {
-        this.user_id = user_id;
+    public User(long id, String first_name, String last_name, String userName) {
+        this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
-        this.email = email;
+        this.userName = userName;
     }
 
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+    public long getId() {
+        return id;
     }
 
-    public Long getUser_id() {
-        return user_id;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getFirst_name() {
@@ -52,11 +58,35 @@ public class User {
         this.last_name = last_name;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

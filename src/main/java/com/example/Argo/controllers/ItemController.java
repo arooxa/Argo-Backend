@@ -3,7 +3,6 @@ package com.example.Argo.controllers;
 import com.example.Argo.models.Item;
 import com.example.Argo.models.Itemgroup;
 import com.example.Argo.service.ItemService;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
