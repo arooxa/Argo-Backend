@@ -36,7 +36,7 @@ public class Item {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_fk", referencedColumnName = "id")
-    @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
+//    @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
     private Itemgroup itemgroup;
 
 

@@ -1,6 +1,7 @@
 package com.example.Argo.service;
 
 import com.example.Argo.models.Board;
+import com.example.Argo.models.Itemgroup;
 import com.example.Argo.repos.BoardRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,4 +22,6 @@ public class BoardService {
 
 
     public List<Board> getAllBoards() { return boardRepo.findAll(); }
+
+    public List<Board> getBoardsByUser(String username) { return boardRepo.findByUserUsername(username); }
 }

@@ -1,5 +1,6 @@
 package com.example.Argo.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -18,6 +19,7 @@ public class Itemgroup {
     private Board board;
 
     @OneToMany(mappedBy="itemgroup")
+    @JsonIgnore
     private List<Item> items;
 
     public Itemgroup() {

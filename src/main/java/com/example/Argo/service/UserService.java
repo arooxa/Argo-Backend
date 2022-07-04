@@ -1,6 +1,6 @@
 package com.example.Argo.service;
 
-import com.example.Argo.models.Role;
+//import com.example.Argo.models.Role;
 import com.example.Argo.models.User;
 //import com.example.Argo.models.UserModel;
 import com.example.Argo.repos.UserRepo;
@@ -12,10 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,6 +33,7 @@ public class UserService implements UserDetailsService {
         return userRepo.findByUsername(username);
     }
 
+
     public boolean usernameExists(String username) {
         return userRepo.existsByUsername(username);
     }
@@ -52,10 +50,10 @@ public class UserService implements UserDetailsService {
             .orElseThrow(() ->
                     new UsernameNotFoundException("User not found with username or email:" + username));
         return new org.springframework.security.core.userdetails.User(user.getUsername(),
-            user.getPassword(), mapRolesToAuthorities(user.getRoles()));
+            user.getPassword(), mapRolesToAuthorities(new HashSet<>(Arrays.asList("ROLE_USER"))));
     }
 
-    private Collection< ? extends GrantedAuthority> mapRolesToAuthorities(Set<Role> roles){
-        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Set<String> roles){
+        return roles.stream().map(role -> new SimpleGrantedAuthority(role)).collect(Collectors.toList());
     }
 }

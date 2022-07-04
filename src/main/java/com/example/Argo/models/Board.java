@@ -1,10 +1,14 @@
 package com.example.Argo.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
+
 import javax.persistence.*;
 import java.util.List;
 
 
 @Entity
+@Data
 public class Board {
 
     @Id
@@ -19,8 +23,13 @@ public class Board {
     @JoinColumn(name = "user_fk", referencedColumnName = "id")
     private User user;
 
+    @JsonIgnore
     @OneToMany(mappedBy="board")
     private List<Itemgroup> itemGroups;
+
+    @JsonIgnore
+    @OneToMany(mappedBy="board", cascade = CascadeType.ALL)
+    private List<BoardUsers> boardUsers;
 
     public Board() {
 

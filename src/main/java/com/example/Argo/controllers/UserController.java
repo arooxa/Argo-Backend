@@ -4,8 +4,6 @@ import com.example.Argo.models.User;
 //import com.example.Argo.models.UserModel;
 import com.example.Argo.payload.LoginDto;
 import com.example.Argo.payload.SignUpDto;
-import com.example.Argo.repos.RoleRepo;
-import com.example.Argo.repos.UserRepo;
 import com.example.Argo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +21,6 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin
 public class UserController {
 
     @Autowired
@@ -81,13 +78,9 @@ public class UserController {
         user.setUsername(signUpDto.getUsername());
         user.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
 
-        //Role roles = roleRepo.findByName("ROLE_ADMIN").get();
-        //user.setRoles(Collections.singleton(roles));
-
         userService.saveUser(user);
 
         return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
-
     }
 
         @GetMapping("/auth/user")
@@ -99,7 +92,6 @@ public class UserController {
                 User currentUser = userService.findUser(currentUserName)
                         .orElseThrow(() ->
                                 new UsernameNotFoundException("User not found with username or email:" + currentUserName));
-                currentUser.setPassword("");
                 return currentUser;
             }
             return null;
