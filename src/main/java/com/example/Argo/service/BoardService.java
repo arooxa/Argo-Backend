@@ -20,6 +20,8 @@ public class BoardService {
 
     public Optional<Board> getBoardById(int id) { return boardRepo.findById(id); }
 
+    public void deleteBoard(Board board) { boardRepo.delete(board);}
+
 
     public List<Board> getAllBoards() { return boardRepo.findAll(); }
 

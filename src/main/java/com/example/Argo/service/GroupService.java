@@ -17,6 +17,8 @@ public class GroupService {
 
     public Itemgroup saveGroup(Itemgroup itemgroup) { return groupRepo.save(itemgroup); }
 
+    public void deleteGroup(Itemgroup itemgroup) { groupRepo.delete(itemgroup); }
+
     public Optional<Itemgroup> getGroupById(int id) { return groupRepo.findById(id); }
 
     public List<Itemgroup> getAllGroups() { return groupRepo.findAll(); }

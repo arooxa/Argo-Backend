@@ -1,8 +1,11 @@
 package com.example.Argo.service;
 
 //import com.example.Argo.models.Role;
+import com.example.Argo.models.Board;
+import com.example.Argo.models.BoardUsers;
 import com.example.Argo.models.User;
 //import com.example.Argo.models.UserModel;
+import com.example.Argo.repos.BoardUsersRepo;
 import com.example.Argo.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,6 +23,8 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepo userRepo;
+    @Autowired
+    private BoardUsersRepo boardUsersRepo;
 
     public UserService(UserRepo userRepository) {
         this.userRepo = userRepository;
@@ -33,17 +38,26 @@ public class UserService implements UserDetailsService {
         return userRepo.findByUsername(username);
     }
 
+    public boolean checkAccess(String username, int id, boolean roleCheck) {
+        Optional<BoardUsers> value = boardUsersRepo.findByUserUsernameAndBoardId(username, id);
+        if(value.isPresent()) {
+            if(roleCheck) {
+                if(value.get().getRole().equals("OWNER")) {
+                    return true;
+                }
+            } else {
+                return true;
+            }
+
+        }
+        return false;
+    }
+
 
     public boolean usernameExists(String username) {
         return userRepo.existsByUsername(username);
     }
 
-//    @Override
-//    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-//        Optional<User> user = userRepo.findByUsername(userName);
-//        user.orElseThrow(() -> new UsernameNotFoundException("Not found: " + userName));
-//        return user.map(UserModel::new).get();
-//    }
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepo.findByUsername(username)
