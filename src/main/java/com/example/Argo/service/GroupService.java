@@ -1,9 +1,6 @@
 package com.example.Argo.service;
 
-import com.example.Argo.models.Board;
-import com.example.Argo.models.Item;
 import com.example.Argo.models.Itemgroup;
-import com.example.Argo.repos.BoardRepo;
 import com.example.Argo.repos.GroupRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +16,8 @@ public class GroupService {
 
 
     public Itemgroup saveGroup(Itemgroup itemgroup) { return groupRepo.save(itemgroup); }
+
+    public void deleteGroup(Itemgroup itemgroup) { groupRepo.delete(itemgroup); }
 
     public Optional<Itemgroup> getGroupById(int id) { return groupRepo.findById(id); }
 
