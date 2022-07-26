@@ -21,6 +21,8 @@ public class ItemService {
 
     public Optional<Item> getItemById(int id) { return itemRepo.findById(id); }
 
+    public int getNumItemsPerBoard(int id) { return itemRepo.findAllByItemgroupBoardId(id).size(); }
+
 
     public List<Item> getAllItems() { return itemRepo.findAll(); }
 

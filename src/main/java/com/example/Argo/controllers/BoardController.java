@@ -1,10 +1,9 @@
 package com.example.Argo.controllers;
 
-import com.example.Argo.models.Board;
-import com.example.Argo.models.BoardUsers;
-import com.example.Argo.models.User;
+import com.example.Argo.models.*;
 import com.example.Argo.repos.BoardUsersRepo;
 import com.example.Argo.service.BoardService;
+import com.example.Argo.service.ItemService;
 import com.example.Argo.service.UserService;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,11 +28,37 @@ public class BoardController {
     private BoardUsersRepo boardUsersRepo;
     @Autowired
     private UserService userService;
+    @Autowired
+    private ItemService itemService;
 
     @GetMapping("/board/getAll")
     public ResponseEntity<List<Board>> getBoardsPerUser(Principal principal) {
-        return ResponseEntity.ok().body(boardService.getBoardsByUser(principal.getName()));
+        List<Board> boards = boardService.getBoardsByUser(principal.getName());
+        for(Board board: boards) {
+            board.setNumTasks(itemService.getNumItemsPerBoard(board.getId()));
+        }
+        return ResponseEntity.ok().body(boards);
     }
+
+//    @GetMapping("/board/{id}/getNumItems")
+//    public ResponseEntity<?> getBoardsPerUser(@PathVariable int id, Principal principal) {
+//        if(boardService.getBoardById(id).isPresent()) {
+//            if(userService.checkAccess(principal.getName(), id, false)) {
+//                Board current = boardService.getBoardById(id).get();
+//                int count = 0;
+//                for(Itemgroup group: current.getItemGroups()) {
+//                    for(Item item: group.getItems()) {
+//                        count++;
+//                    }
+//                }
+//                return ResponseEntity.ok().body(itemService.getNumItemsPerBoard(id));
+//            } else {
+//                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+//            }
+//        } else {
+//            return ResponseEntity.badRequest().body("Board Id does not exist");
+//        }
+//    }
 
     @PostMapping("/board/add")
     public ResponseEntity<?> addBoard(@RequestBody Board board, Principal principal) {
@@ -44,8 +69,9 @@ public class BoardController {
             boardUsers.setBoard(board);
             boardUsers.setUser(currentUser);
             boardUsers.setRole("OWNER");
-            boardUsersRepo.save(boardUsers);
             boardService.saveBoard(board);
+            boardUsersRepo.save(boardUsers);
+
             return ResponseEntity.ok().body("Board Added Successfully");
         } else {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);

@@ -23,6 +23,7 @@ public class BoardService {
     public void deleteBoard(Board board) { boardRepo.delete(board);}
 
 
+
     public List<Board> getAllBoards() { return boardRepo.findAll(); }
 
     public List<Board> getBoardsByUser(String username) { return boardRepo.findByUserUsername(username); }

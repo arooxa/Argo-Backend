@@ -9,5 +9,7 @@ import java.util.List;
 @Repository
 public interface ItemRepo extends JpaRepository<Item, Integer> {
 
-    public List<Item> findByItemgroupId(int groupId);
+    List<Item> findByItemgroupId(int groupId);
+
+    List<Item> findAllByItemgroupBoardId(int boardId);
 }

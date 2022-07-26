@@ -25,10 +25,12 @@ public class Board {
     private User user;
 
     @JsonIgnore
-    @OneToMany(mappedBy="board", orphanRemoval = true)
+    @OneToMany(mappedBy="board", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Itemgroup> itemGroups;
 
     @JsonIgnore
     @OneToMany(mappedBy="board", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BoardUsers> boardUsers;
+
+    private int numTasks;
 }
